@@ -1,39 +1,53 @@
-import { useState,useRef } from 'react';
+import {useRef } from 'react';
 
 type AddProjectProps = {
 	setIsNewProject: React.Dispatch<React.SetStateAction<boolean>>;
 	saveProjectHandler: (title: string, description: string, date: string) => void;
+	errorMessage: string;
+	setErrorMessage: React.Dispatch<React.SetStateAction<string>>;
+	projectData: { title: string; desc: string; date: string }[];
 };
 
-export default function AddProject({ setIsNewProject, saveProjectHandler }: AddProjectProps) {
+export default function AddProject({
+	setIsNewProject,
+	saveProjectHandler,
+	projectData,
+	errorMessage,
+	setErrorMessage,
+}: AddProjectProps) {
 	const inputTitle = useRef<HTMLInputElement>(null);
 	const inputDesc = useRef<HTMLInputElement>(null);
 	const inputDate = useRef<HTMLInputElement>(null);
 
-	const [errorMessage, setErrorMessage] = useState(false);
-
 	function addProjectHandler() {
-		const title = inputTitle.current?.value || '';
+		console.log('?');
+		const title = inputTitle.current?.value.trim() || '';
 		const desc = inputDesc.current?.value || '';
 		const date = inputDate.current?.value || '';
 
-		if (title.trim() === '') {
-			setErrorMessage(true);
+		if (!title) {
+			setErrorMessage('You have to provide a title');
 			return;
-		} else {
-			setErrorMessage(false);
 		}
+
+		if (projectData.some(project => project.title === title)) {
+			setErrorMessage('Project with this title already exists!');
+			return;
+		}
+		console.log('2');
 		saveProjectHandler(title, desc, date);
 		setIsNewProject(false);
 	}
-
 
 	return (
 		<>
 			<div className='flex-col w-full max-w-2xl items-center justify-end gap-4 my-4 mr-6'>
 				<menu className='flex items-center justify-end gap-4 my-4'>
 					<button
-						onClick={() => setIsNewProject(false)}
+						onClick={() => {
+							setIsNewProject(false);
+							setErrorMessage('');
+						}}
 						className='text-stone-600 hover:text-stone-950 transition duration-300'
 					>
 						Cancel
@@ -52,9 +66,8 @@ export default function AddProject({ setIsNewProject, saveProjectHandler }: AddP
 						<input
 							ref={inputTitle}
 							className='w-full p-1 border-b-2 rounded-sm border-stone-300 bg-stone-200 text-stone-600 focus:outline-none focus:border-stone-600 placeholder-red-500'
-							placeholder={errorMessage ? 'You have to provide a title' : ''}
 						/>
-						{/* {errorMessage && <span className='text-red-600 text-sm'>You have to provide a title</span>} */}
+						{errorMessage && <span className='text-red-600 text-sm'>{errorMessage}</span>}
 					</p>
 					<p className='flex flex-col gap-1 my-4'>
 						<label className='text-sm font-bold uppercase text-stone-500'>Description</label>
@@ -72,8 +85,6 @@ export default function AddProject({ setIsNewProject, saveProjectHandler }: AddP
 						/>
 					</p>
 				</form>
-
-				{errorMessage && <p>{errorMessage}</p>}
 			</div>
 		</>
 	);
