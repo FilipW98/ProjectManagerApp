@@ -1,12 +1,5 @@
-import {useRef } from 'react';
-
-type AddProjectProps = {
-	setIsNewProject: React.Dispatch<React.SetStateAction<boolean>>;
-	saveProjectHandler: (title: string, description: string, date: string) => void;
-	errorMessage: string;
-	setErrorMessage: React.Dispatch<React.SetStateAction<string>>;
-	projectData: { title: string; desc: string; date: string }[];
-};
+import { useRef } from 'react';
+import { AddProjectProps } from '../types';
 
 export default function AddProject({
 	setIsNewProject,
@@ -20,7 +13,6 @@ export default function AddProject({
 	const inputDate = useRef<HTMLInputElement>(null);
 
 	function addProjectHandler() {
-		console.log('?');
 		const title = inputTitle.current?.value.trim() || '';
 		const desc = inputDesc.current?.value || '';
 		const date = inputDate.current?.value || '';
@@ -34,7 +26,6 @@ export default function AddProject({
 			setErrorMessage('Project with this title already exists!');
 			return;
 		}
-		console.log('2');
 		saveProjectHandler(title, desc, date);
 		setIsNewProject(false);
 	}

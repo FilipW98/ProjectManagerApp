@@ -1,18 +1,4 @@
-import { useState } from "react";
-
-
-type Project = {
-	title: string;
-	desc: string;
-	date: string;
-};
-
-type NavProps = {
-	setIsNewProject: React.Dispatch<React.SetStateAction<boolean>>;
-	projectData: Project[];
-	setSelectedProject: React.Dispatch<React.SetStateAction<Project | null>>;
-	
-};
+import { Project,NavProps } from '../types';
 
 
 export default function Nav({ setIsNewProject, projectData, setSelectedProject }: NavProps) {
@@ -20,7 +6,6 @@ export default function Nav({ setIsNewProject, projectData, setSelectedProject }
 	function navAddProjectHandler() {
 		setIsNewProject(true);
 	}
-
 	function showProjectHandler(project: Project) {
 		setSelectedProject(project);
 	}

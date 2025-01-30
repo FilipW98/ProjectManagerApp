@@ -2,12 +2,12 @@ import Nav from './components/Nav';
 import Board from './components/Board';
 import AddProject from './components/AddProject';
 import ProjectDetails from './components/ProjectDetails';
-import Project from './types';
+import {Project} from './types';
 import { useState } from 'react';
 
 
 function App() {
-	
+
 	const [isNewProject, setIsNewProject] = useState(false);
 	const [saveProject, setSaveProject] = useState<{
 		title: string;
@@ -27,8 +27,6 @@ function App() {
 			setSaveProject(prevData => [...prevData, { title, desc, date }]);
 	}
 
-	console.log(selectedProject);
-
 
 	return (
 		<main className='h-screen my-8 flex gap-8'>
@@ -46,8 +44,14 @@ function App() {
 					setErrorMessage={setErrorMessage}
 				/>
 			)}
-
-			{selectedProject && <ProjectDetails selectedProject={selectedProject} />}
+			{selectedProject && (
+				<ProjectDetails
+					selectedProject={selectedProject}
+					projectsData={saveProject}
+					setSaveProject={setSaveProject}
+					setSelectedProject={setSelectedProject}
+				/>
+			)}
 		</main>
 	);
 }

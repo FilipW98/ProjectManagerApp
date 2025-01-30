@@ -1,11 +1,14 @@
-import Project from '../types';
+import { ProjectDetailsProps } from '../types';
 
-type ProjectDetailsProps = {
-	selectedProject: Project | null;
-};
 
-export default function ProjectDetails({ selectedProject }: ProjectDetailsProps) {
-	console.log(selectedProject);
+export default function ProjectDetails({ selectedProject, projectsData, setSaveProject, setSelectedProject }: ProjectDetailsProps) {
+
+	function deleteProjectHandler() {
+		const updatedProjects = projectsData.filter(project => project.title !== selectedProject!.title);
+        setSaveProject(updatedProjects);
+        setSelectedProject(null);
+	}
+
 	return (
 		<div className='flex-col'>
 			<div className='flex justify-between'>
@@ -14,7 +17,13 @@ export default function ProjectDetails({ selectedProject }: ProjectDetailsProps)
 					<p>{selectedProject!.date}</p>
 					<p>{selectedProject!.desc}</p>
 				</div>
-				<button>Delete</button>
+				<button
+					onClick={() => {
+						deleteProjectHandler();
+					}}
+				>
+					Delete
+				</button>
 			</div>
 			<div className='underline'></div>
 		</div>
