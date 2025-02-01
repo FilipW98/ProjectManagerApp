@@ -1,4 +1,6 @@
- type Project = {
+import { RefObject } from "react"; 
+
+type Project = {
 	title: string;
 	desc: string;
 	date: string;
@@ -32,4 +34,17 @@ type AddProjectProps = {
 		projectData: { title: string; desc: string; date: string }[];
 };
 	
-export type {AddProjectProps}
+export type { AddProjectProps };
+
+
+
+type InputProps = {
+	labelName: string;
+	inputRef?: RefObject<HTMLInputElement>;
+	textAreaRef?: RefObject<HTMLTextAreaElement>;
+	textarea?: boolean;
+	errorMessage?: string;
+	type?: string;
+};
+
+export type { InputProps };

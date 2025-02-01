@@ -1,5 +1,6 @@
 import { useRef } from 'react';
 import { AddProjectProps } from '../types';
+import Input from './Input';
 
 export default function AddProject({
 	setIsNewProject,
@@ -9,8 +10,10 @@ export default function AddProject({
 	setErrorMessage,
 }: AddProjectProps) {
 	const inputTitle = useRef<HTMLInputElement>(null);
-	const inputDesc = useRef<HTMLInputElement>(null);
+	const inputDesc = useRef<HTMLTextAreaElement>(null);
 	const inputDate = useRef<HTMLInputElement>(null);
+
+
 
 	function addProjectHandler() {
 		const title = inputTitle.current?.value.trim() || '';
@@ -52,29 +55,22 @@ export default function AddProject({
 				</menu>
 
 				<form className='mt-4'>
-					<p className='flex flex-col gap-1 my-4'>
+					<Input labelName={'Title'} inputRef={inputTitle} errorMessage={errorMessage} />
+					<Input labelName={'Description'} textAreaRef={inputDesc} textarea />
+					<Input labelName={'Due Date'} inputRef={inputDate} type='date' />
+					{/* <p className='flex flex-col gap-1 my-4'>
 						<label className='text-sm font-bold uppercase text-stone-500'>Title</label>
-						<input
-							ref={inputTitle}
-							className='w-full p-1 border-b-2 rounded-sm border-stone-300 bg-stone-200 text-stone-600 focus:outline-none focus:border-stone-600 placeholder-red-500'
-						/>
+						<input ref={inputTitle} className={`${classes} placeholder-red-500`} />
 						{errorMessage && <span className='text-red-600 text-sm'>{errorMessage}</span>}
 					</p>
 					<p className='flex flex-col gap-1 my-4'>
 						<label className='text-sm font-bold uppercase text-stone-500'>Description</label>
-						<input
-							ref={inputDesc}
-							className='w-full p-1 border-b-2 rounded-sm border-stone-300 bg-stone-200 text-stone-600 focus:outline-none focus:border-stone-600'
-						/>
+						<textarea ref={inputDesc} className={`${classes} max-h-48 min-h-7`} />
 					</p>
 					<p className='flex flex-col gap-1 my-4'>
 						<label className='text-sm font-bold uppercase text-stone-500'>Due Date</label>
-						<input
-							ref={inputDate}
-							type='date'
-							className='w-full p-1 border-b-2 rounded-sm border-stone-300 bg-stone-200 text-stone-600 focus:outline-none focus:border-stone-600'
-						/>
-					</p>
+						<input ref={inputDate} type='date' className={classes} />
+					</p> */}
 				</form>
 			</div>
 		</>
