@@ -48,3 +48,11 @@ type InputProps = {
 };
 
 export type { InputProps };
+
+
+type BoardProps = {
+	newProjectHandler: () => void;
+	setSelectedProject: React.Dispatch<React.SetStateAction<Project | null>>;
+};
+
+export type {BoardProps};

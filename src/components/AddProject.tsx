@@ -53,24 +53,10 @@ export default function AddProject({
 						Save
 					</button>
 				</menu>
-
 				<form className='mt-4'>
 					<Input labelName={'Title'} inputRef={inputTitle} errorMessage={errorMessage} />
 					<Input labelName={'Description'} textAreaRef={inputDesc} textarea />
 					<Input labelName={'Due Date'} inputRef={inputDate} type='date' />
-					{/* <p className='flex flex-col gap-1 my-4'>
-						<label className='text-sm font-bold uppercase text-stone-500'>Title</label>
-						<input ref={inputTitle} className={`${classes} placeholder-red-500`} />
-						{errorMessage && <span className='text-red-600 text-sm'>{errorMessage}</span>}
-					</p>
-					<p className='flex flex-col gap-1 my-4'>
-						<label className='text-sm font-bold uppercase text-stone-500'>Description</label>
-						<textarea ref={inputDesc} className={`${classes} max-h-48 min-h-7`} />
-					</p>
-					<p className='flex flex-col gap-1 my-4'>
-						<label className='text-sm font-bold uppercase text-stone-500'>Due Date</label>
-						<input ref={inputDate} type='date' className={classes} />
-					</p> */}
 				</form>
 			</div>
 		</>
