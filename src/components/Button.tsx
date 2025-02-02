@@ -1,9 +1,4 @@
-import { ReactNode } from 'react';
-
-type ButtonProps = {
-	children: ReactNode;
-	onClick?: () => void;
-};
+import { ButtonProps } from '../types';
 
 export default function Button({ children, ...props }: ButtonProps) {
 	return (

@@ -1,4 +1,5 @@
-import { RefObject } from "react"; 
+import { RefObject,ReactNode } from "react"; 
+
 
 type Project = {
 	title: string;
@@ -21,6 +22,7 @@ type NavProps = {
 	setIsNewProject: React.Dispatch<React.SetStateAction<boolean>>;
 	projectData: Project[];
 	setSelectedProject: React.Dispatch<React.SetStateAction<Project | null>>;
+	selectedProject: Project | null;
 };
 
 export type {NavProps};
@@ -29,13 +31,12 @@ export type {NavProps};
 type AddProjectProps = {
 		setIsNewProject: React.Dispatch<React.SetStateAction<boolean>>;
 		saveProjectHandler: (title: string, description: string, date: string) => void;
-		errorMessage: string;
-		setErrorMessage: React.Dispatch<React.SetStateAction<string>>;
+		// errorMessage: string;
+		// setErrorMessage: React.Dispatch<React.SetStateAction<string>>;
 		projectData: { title: string; desc: string; date: string }[];
 };
 	
 export type { AddProjectProps };
-
 
 
 type InputProps = {
@@ -55,4 +56,18 @@ type BoardProps = {
 	setSelectedProject: React.Dispatch<React.SetStateAction<Project | null>>;
 };
 
-export type {BoardProps};
+export type { BoardProps };
+
+type ButtonProps = {
+	children: ReactNode;
+	onClick?: () => void;
+};
+
+export type { ButtonProps };
+
+type ModalProps = {
+	children: ReactNode;
+	ref: RefObject<HTMLDialogElement>;
+};
+
+export type { ModalProps };

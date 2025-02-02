@@ -2,8 +2,3 @@
 @tailwind components;
 @tailwind utilities;
 
-
-.underline{
-    height: 1px; width: 100%;
-    background-color: #554e4e;
-}
