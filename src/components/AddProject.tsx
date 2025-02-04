@@ -1,4 +1,4 @@
-import { Children, useRef } from 'react';
+import {useRef } from 'react';
 import { AddProjectProps } from '../types';
 import Input from './Input';
 import Modal from './Modal';
@@ -8,13 +8,12 @@ export default function AddProject({
 	setIsNewProject,
 	saveProjectHandler,
 	projectData,
-	// errorMessage,
-	// setErrorMessage,
 }: AddProjectProps) {
 
 	const inputTitle = useRef<HTMLInputElement>(null);
 	const inputDesc = useRef<HTMLTextAreaElement>(null);
 	const inputDate = useRef<HTMLInputElement>(null);
+	const modal = useRef<HTMLDialogElement | null>(null);
 	
 	function addProjectHandler() {
 		const title = inputTitle.current?.value.trim() || '';
@@ -25,16 +24,13 @@ export default function AddProject({
 			modal.current?.showModal();
 			return;
 		}
-		
 		if (projectData.some(project => project.title === title)) {
-			// setErrorMessage('Project with this title already exists!');
 			return;
 		}
 		saveProjectHandler(title, desc, date);
 		setIsNewProject(false);
 	}
 	
-	const modal = useRef<HTMLDialogElement | null>(null);
 	return (
 		<>
 			<Modal ref={modal}>
@@ -49,7 +45,6 @@ export default function AddProject({
 					<button
 						onClick={() => {
 							setIsNewProject(false);
-							// setErrorMessage('');
 						}}
 						className='text-stone-600 hover:text-stone-950 transition duration-300'
 					>
@@ -64,7 +59,6 @@ export default function AddProject({
 				</menu>
 				<form className='mt-4'>
 					<Input labelName={'Title'} inputRef={inputTitle}
-						// errorMessage={errorMessage}
 					/>
 					<Input labelName={'Description'} textAreaRef={inputDesc} textarea />
 					<Input labelName={'Due Date'} inputRef={inputDate} type='date' />

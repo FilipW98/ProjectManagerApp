@@ -19,10 +19,10 @@ export default function ProjectDetails({ selectedProject, projectsData, setSaveP
 		}));
 	}
 
+	console.log(taskData);
+
 	
 	function addTaskHandler() {
-		console.log(taskData.input);
-
 		if (taskData.input.trim() !== '' && !taskData.tasks.includes(taskData.input.trim())) {
 			setTaskData(prev => ({
 				tasks: [...prev.tasks, prev.input],
@@ -34,40 +34,57 @@ export default function ProjectDetails({ selectedProject, projectsData, setSaveP
 
 
 	return (
-		<div className='w-[35rem] mt-16'>
+		<div className='w-[35rem] mt-16 pr-4'>
 			<header className='pb-4 mb-4 border-b-2 border-stone-300'>
 				<div className='flex items-center justify-between'>
-					<h2 className='text-3xl font-bold text-stone-600 mb-2'>{selectedProject!.title}</h2>
-				<button className='text-stone-600 hover:text-stone-950'
-					onClick={() => {
-						deleteProjectHandler();
-					}}
+					<h2 className='text-2xl md:text-3xl font-bold text-stone-600 mb-2'>{selectedProject!.title}</h2>
+					<button
+						className='text-stone-600 hover:text-stone-950'
+						onClick={() => {
+							deleteProjectHandler();
+						}}
 					>
-					Delete
-				</button>
+						Delete
+					</button>
 				</div>
-					<p className='mb-4 text-stone-400'>{selectedProject!.date}</p>
-					<p className='text-stone-600 whitespace-pre-wrap'>{selectedProject!.desc}</p>
+				<p className='mb-4 text-stone-400'>{selectedProject!.date}</p>
+				<p className='text-stone-600 whitespace-pre-wrap'>{selectedProject!.desc}</p>
 			</header>
 
-			<h3>Tasks</h3>
-			<div>
+			<h2 className='text-2xl font-bold text-stone-700 mb-4'>Tasks</h2>
+			<div className='add-task-mobile'>
 				<input
+					className='w-40  sm:w-64 px-2 py-1 rounded-sm bg-stone-200'
 					value={taskData.input}
 					type='text'
 					onChange={e => setTaskData(prev => ({ ...prev, input: e.target.value }))}
 				/>
-				<button onClick={addTaskHandler}>Add task</button>
+				<button className='text-stone-700 hover:text-stone-950 ml-2 sm:ml-5' onClick={addTaskHandler}>
+					Add task
+				</button>
 			</div>
-			<ul>
-				{taskData.tasks.map(task => {
-					return <li key={task}>
-						<button onClick={() => { deleteTaskHandler(task); }}>
-						{task}
-						</button>
-					</li>;
-				})}
-			</ul>
+			{taskData.tasks.length === 0 && (
+				<p className='text-stone-800 my-4 sm:text-base text-sm'>This project does not have any tasks yet.</p>
+			)}
+			{taskData.tasks.length > 0 && (
+				<ul className='p-4 mt-8 rounded-md bg-stone-100'>
+					{taskData.tasks.map(task => {
+						return (
+							<li key={task} className='flex justify-between my-4'>
+								<span>{task}</span>
+								<button
+									className='text-stone-700 hover:text-red-500'
+									onClick={() => {
+										deleteTaskHandler(task);
+									}}
+								>
+									Clear
+								</button>
+							</li>
+						);
+					})}
+				</ul>
+			)}
 		</div>
 	);
 }

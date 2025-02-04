@@ -16,7 +16,6 @@ function App() {
 	>([]);
 	// const [errorMessage, setErrorMessage] = useState('');
 	const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-	console.log(selectedProject);
 
 	function newProjectHandler(): void {
 		setIsNewProject(true);
@@ -28,7 +27,7 @@ function App() {
 	}
 
 	return (
-		<main className='h-screen my-8 flex gap-8'>
+		<main className='h-screen my-8 flex gap-4 md:gap-8'>
 			<Nav
 				setIsNewProject={setIsNewProject}
 				projectData={saveProject}
