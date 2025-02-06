@@ -4,6 +4,7 @@ import AddProject from './components/AddProject';
 import ProjectDetails from './components/ProjectDetails';
 import { Project } from './types';
 import { useState } from 'react';
+import { ProjectContext } from './store/project-context';
 
 function App() {
 	const [isNewProject, setIsNewProject] = useState(false);
@@ -14,7 +15,6 @@ function App() {
 			date: string;
 		}[]
 	>([]);
-	// const [errorMessage, setErrorMessage] = useState('');
 	const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
 	function newProjectHandler(): void {
@@ -22,40 +22,20 @@ function App() {
 	}
 
 	function saveProjectHandler(title: string, desc: string, date: string) {
-		// setErrorMessage('');
 		setSaveProject(prevData => [...prevData, { title, desc, date }]);
 	}
 
 	return (
-		<main className='h-screen my-8 flex gap-4 md:gap-8'>
-			<Nav
-				setIsNewProject={setIsNewProject}
-				projectData={saveProject}
-				setSelectedProject={setSelectedProject}
-				selectedProject={selectedProject}
-			/>
-
-			{!isNewProject && !selectedProject && (
-				<Board newProjectHandler={newProjectHandler} setSelectedProject={setSelectedProject} />
-			)}
-			{isNewProject && (
-				<AddProject
-					setIsNewProject={setIsNewProject}
-					projectData={saveProject}
-					saveProjectHandler={saveProjectHandler}
-					// errorMessage={errorMessage}
-					// setErrorMessage={setErrorMessage}
-				/>
-			)}
-			{selectedProject && (
-				<ProjectDetails
-					selectedProject={selectedProject}
-					projectsData={saveProject}
-					setSaveProject={setSaveProject}
-					setSelectedProject={setSelectedProject}
-				/>
-			)}
-		</main>
+		<ProjectContext.Provider value={{ saveProject, setSaveProject, selectedProject, setSelectedProject }}>
+			<main className='h-screen my-8 flex gap-4 md:gap-8'>
+				<Nav setIsNewProject={setIsNewProject}/>
+				{!isNewProject && !selectedProject && (
+					<Board	newProjectHandler={newProjectHandler}/>
+				)}
+				{isNewProject && <AddProject setIsNewProject={setIsNewProject} saveProjectHandler={saveProjectHandler} />}
+				{selectedProject && (<ProjectDetails/>)}
+			</main>
+		</ProjectContext.Provider>
 	);
 }
 

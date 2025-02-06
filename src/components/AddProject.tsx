@@ -3,12 +3,15 @@ import { AddProjectProps } from '../types';
 import Input from './Input';
 import Modal from './Modal';
 import Button from './Button';
+import { ProjectContext } from '../store/project-context';
+import { useContext } from 'react';
 
 export default function AddProject({
 	setIsNewProject,
 	saveProjectHandler,
-	projectData,
 }: AddProjectProps) {
+
+	const addProjectCtx = useContext(ProjectContext); 
 
 	const inputTitle = useRef<HTMLInputElement>(null);
 	const inputDesc = useRef<HTMLTextAreaElement>(null);
@@ -24,7 +27,7 @@ export default function AddProject({
 			modal.current?.showModal();
 			return;
 		}
-		if (projectData.some(project => project.title === title)) {
+		if (addProjectCtx?.saveProject.some(project => project.title === title)) {
 			return;
 		}
 		saveProjectHandler(title, desc, date);
