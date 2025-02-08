@@ -1,11 +1,12 @@
 import icon from '../assets/no-projects.png';
-import { BoardProps } from '../types';
 import Button from './Button';
 import { ProjectContext } from '../store/project-context';
 import { useContext } from 'react';
 
-export default function Board({ newProjectHandler }: BoardProps) {
+export default function Board() {
+
 	const boardCtx = useContext(ProjectContext);
+	
 	return (
 		<div className='mt-24 text-center w-2/3 pr-2'>
 			<img className='w-16 h-16 object-contain mx-auto' src={icon} alt='logo' />
@@ -13,8 +14,9 @@ export default function Board({ newProjectHandler }: BoardProps) {
 			<p className='text-stone-600 mb-8'>Select a project or get started with a new one.</p>
 			<Button
 				onClick={() => {
-					newProjectHandler();
-					boardCtx?.setSelectedProject(null);
+					boardCtx?.newProjectHandler();
+					//  boardCtx?.setSelectedProject(null);
+					 boardCtx?.dispatchFn({ type: 'delete-project' });
 				}}
 			>
 				Create new project

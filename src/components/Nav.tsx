@@ -1,18 +1,19 @@
-import { Project, NavProps } from '../types';
+import { Project} from '../types';
 import Button from './Button';
 import { ProjectContext } from '../store/project-context';
 import { useContext } from 'react';
 
 
-export default function Nav({ setIsNewProject}: NavProps) {
+export default function Nav() {
 
 const navCtx = useContext(ProjectContext);
 
 	function navAddProjectHandler() {
-		setIsNewProject(true);
+		navCtx?.dispatchFn({type:'new-project'});
 	}
 	function showProjectHandler(project: Project) {
-		navCtx?.setSelectedProject(project);
+		// navCtx?.setSelectedProject(project);
+		navCtx?.dispatchFn({type:"selected-project", payload: project})
 	}
 
 	return (
@@ -21,17 +22,18 @@ const navCtx = useContext(ProjectContext);
 			<Button
 				onClick={() => {
 					navAddProjectHandler();
-					navCtx?.setSelectedProject(null);
+					// navCtx?.setSelectedProject(null);
+					navCtx?.dispatchFn({ type: 'delete-project' });
 				}}
 			>
 				+ Add Project
 			</Button>
 			<div className='mt-5'>
 				<ul>
-					{navCtx?.saveProject.map(data => {
+					{navCtx?.state.saveProject.map(data => {
 						let cssClasses =
 							'w-full text-left px-2 py-1 my-1 rounded-sm text-stone-400 hover:text-stone-200 hover:bg-stone-800 transition duration-300';
-						if (data.title === navCtx.selectedProject?.title) {
+						if (data.title === navCtx.state.selectedProject?.title) {
 							cssClasses += ' bg-stone-800 text-stone-200';
 						} else {
 							cssClasses += ' text-stone-400';
@@ -41,7 +43,7 @@ const navCtx = useContext(ProjectContext);
 								<button
 									onClick={() => {
 										showProjectHandler(data);
-										setIsNewProject(false);
+										// navCtx.dispatchFn({type:'new-project'});
 									}}
 									className={cssClasses}
 								>

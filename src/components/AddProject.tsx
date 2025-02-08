@@ -1,15 +1,11 @@
 import {useRef } from 'react';
-import { AddProjectProps } from '../types';
 import Input from './Input';
 import Modal from './Modal';
 import Button from './Button';
 import { ProjectContext } from '../store/project-context';
 import { useContext } from 'react';
 
-export default function AddProject({
-	setIsNewProject,
-	saveProjectHandler,
-}: AddProjectProps) {
+export default function AddProject() {
 
 	const addProjectCtx = useContext(ProjectContext); 
 
@@ -27,11 +23,11 @@ export default function AddProject({
 			modal.current?.showModal();
 			return;
 		}
-		if (addProjectCtx?.saveProject.some(project => project.title === title)) {
+		if (addProjectCtx?.state.saveProject.some(project => project.title === title)) {
 			return;
 		}
-		saveProjectHandler(title, desc, date);
-		setIsNewProject(false);
+		addProjectCtx?.saveProjectHandler(title, desc, date);
+		addProjectCtx?.dispatchFn({type: "reset-project"});
 	}
 	
 	return (
@@ -47,7 +43,7 @@ export default function AddProject({
 				<menu className='flex items-center justify-end gap-4 my-4'>
 					<button
 						onClick={() => {
-							setIsNewProject(false);
+							addProjectCtx?.dispatchFn({type: "reset-project"});
 						}}
 						className='text-stone-600 hover:text-stone-950 transition duration-300'
 					>

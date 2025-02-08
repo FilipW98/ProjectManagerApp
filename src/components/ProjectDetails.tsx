@@ -9,11 +9,14 @@ export default function ProjectDetails() {
 	const [taskData, setTaskData] = useState<{tasks:string[], input:string}>({ tasks:[], input:''});
 
 	function deleteProjectHandler() {
-		const updatedProjects = projectDeatilsCtx?.saveProject.filter(
-			project => project.title !== projectDeatilsCtx.selectedProject!.title
+		const updatedProjects = projectDeatilsCtx?.state.saveProject.filter(
+			project => project.title !== projectDeatilsCtx.state.selectedProject!.title
 		);
-        projectDeatilsCtx?.setSaveProject(updatedProjects?? []);
-        projectDeatilsCtx?.setSelectedProject(null);
+        //  projectDeatilsCtx?.setSaveProject(updatedProjects?? []);
+         projectDeatilsCtx?.dispatchFn({ type: 'update-save-project', payload: updatedProjects ?? [] });
+		// projectDeatilsCtx?.state.setSelectedProject(null);
+		 projectDeatilsCtx?.dispatchFn({type: "delete-project"});
+		
 	}
 
 	function deleteTaskHandler(selectedTask:string) {
@@ -32,12 +35,14 @@ export default function ProjectDetails() {
 		}
 	}
 
+	console.log(taskData);
+
 	return (
 		<div className='w-[35rem] mt-16 pr-4'>
 			<header className='pb-4 mb-4 border-b-2 border-stone-300'>
 				<div className='flex items-center justify-between'>
 					<h2 className='text-2xl md:text-3xl font-bold text-stone-600 mb-2'>
-						{projectDeatilsCtx?.selectedProject!.title}
+						{projectDeatilsCtx?.state.selectedProject?.title}
 					</h2>
 					<button
 						className='text-stone-600 hover:text-stone-950 transition duration-300'
@@ -48,8 +53,8 @@ export default function ProjectDetails() {
 						Delete
 					</button>
 				</div>
-				<p className='mb-4 text-stone-400'>{projectDeatilsCtx?.selectedProject!.date}</p>
-				<p className='text-stone-600 whitespace-pre-wrap'>{projectDeatilsCtx?.selectedProject!.desc}</p>
+				<p className='mb-4 text-stone-400'>{projectDeatilsCtx?.state.selectedProject!.date}</p>
+				<p className='text-stone-600 whitespace-pre-wrap'>{projectDeatilsCtx?.state.selectedProject!.desc}</p>
 			</header>
 
 			<h2 className='text-2xl font-bold text-stone-700 mb-4'>Tasks</h2>
