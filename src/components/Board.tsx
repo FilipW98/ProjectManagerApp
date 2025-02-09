@@ -15,7 +15,6 @@ export default function Board() {
 			<Button
 				onClick={() => {
 					boardCtx?.newProjectHandler();
-					//  boardCtx?.setSelectedProject(null);
 					 boardCtx?.dispatchFn({ type: 'delete-project' });
 				}}
 			>

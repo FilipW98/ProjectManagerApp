@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { ProjectContext } from '../store/project-context';
 import { useContext } from 'react';
 
-
 export default function ProjectDetails() {
 
 	const projectDeatilsCtx = useContext(ProjectContext); 
@@ -12,11 +11,8 @@ export default function ProjectDetails() {
 		const updatedProjects = projectDeatilsCtx?.state.saveProject.filter(
 			project => project.title !== projectDeatilsCtx.state.selectedProject!.title
 		);
-        //  projectDeatilsCtx?.setSaveProject(updatedProjects?? []);
          projectDeatilsCtx?.dispatchFn({ type: 'update-save-project', payload: updatedProjects ?? [] });
-		// projectDeatilsCtx?.state.setSelectedProject(null);
 		 projectDeatilsCtx?.dispatchFn({type: "delete-project"});
-		
 	}
 
 	function deleteTaskHandler(selectedTask:string) {
@@ -34,8 +30,6 @@ export default function ProjectDetails() {
 			}));
 		}
 	}
-
-	console.log(taskData);
 
 	return (
 		<div className='w-[35rem] mt-16 pr-4'>

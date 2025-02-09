@@ -3,7 +3,6 @@ import Button from './Button';
 import { ProjectContext } from '../store/project-context';
 import { useContext } from 'react';
 
-
 export default function Nav() {
 
 const navCtx = useContext(ProjectContext);
@@ -12,7 +11,6 @@ const navCtx = useContext(ProjectContext);
 		navCtx?.dispatchFn({type:'new-project'});
 	}
 	function showProjectHandler(project: Project) {
-		// navCtx?.setSelectedProject(project);
 		navCtx?.dispatchFn({type:"selected-project", payload: project})
 	}
 
@@ -22,7 +20,6 @@ const navCtx = useContext(ProjectContext);
 			<Button
 				onClick={() => {
 					navAddProjectHandler();
-					// navCtx?.setSelectedProject(null);
 					navCtx?.dispatchFn({ type: 'delete-project' });
 				}}
 			>
@@ -43,7 +40,6 @@ const navCtx = useContext(ProjectContext);
 								<button
 									onClick={() => {
 										showProjectHandler(data);
-										// navCtx.dispatchFn({type:'new-project'});
 									}}
 									className={cssClasses}
 								>

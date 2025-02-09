@@ -30,8 +30,6 @@ type Action =
 export type {Action};
 
 
-
-
 type Project = {
 	title: string;
 	desc: string;
