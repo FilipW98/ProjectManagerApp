@@ -9,7 +9,7 @@ Project Manager App
 </div>
 
 
-## <div align="center" ><a href="https://filipw98.github.io/ProjectManagerApp/" target="_blank" rel="noreferrer"> <img src="https://github.com/FilipW98/ProjectManagerApp/public/live-icon.png" alt="live icon" width="80" height="40"/> </a>  </div>
+## <div align="center" ><a href="https://filipw98.github.io/ProjectManagerApp/" target="_blank" rel="noreferrer"> <img src="https://github.com/FilipW98/ProjectManagerApp/blob/master/public/live-icon.png" alt="live icon" width="80" height="40"/> </a>  </div>
 
 
 
