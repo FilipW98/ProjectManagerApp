@@ -40,6 +40,7 @@ const navCtx = useContext(ProjectContext);
 								<button
 									onClick={() => {
 										showProjectHandler(data);
+										navCtx?.dispatchFn({ type: 'reset-project' });
 									}}
 									className={cssClasses}
 								>

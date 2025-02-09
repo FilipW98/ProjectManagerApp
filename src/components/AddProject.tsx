@@ -18,6 +18,7 @@ export default function AddProject() {
 		const title = inputTitle.current?.value.trim() || '';
 		const desc = inputDesc.current?.value || '';
 		const date = inputDate.current?.value || '';
+		const tasks: string[] = [];
 		
 		if (!title) {
 			modal.current?.showModal();
@@ -26,7 +27,7 @@ export default function AddProject() {
 		if (addProjectCtx?.state.saveProject.some(project => project.title === title)) {
 			return;
 		}
-		addProjectCtx?.saveProjectHandler(title, desc, date);
+		addProjectCtx?.saveProjectHandler(title, desc, date,tasks);
 		addProjectCtx?.dispatchFn({type: "reset-project"});
 	}
 	

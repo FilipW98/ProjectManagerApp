@@ -2,7 +2,7 @@ import { RefObject, ReactNode } from "react";
 
 type ProjectContextProps = {
 	newProjectHandler: () => void;
-	saveProjectHandler: (title: string, description: string, date: string) => void;
+	saveProjectHandler: (title: string, description: string, date: string,tasks:string[]) => void;
 	state: ProjectState,
 	dispatchFn: React.Dispatch<Action>
 };
@@ -26,7 +26,9 @@ type Action =
 	| { type: 'delete-project' }
 	| { type: 'save-project'; payload: Project }
 	| { type: 'selected-project'; payload: Project | null }
-	| { type: 'update-save-project'; payload: Project[] };
+	| { type: 'update-save-project'; payload: Project[] }
+	| { type: "add-task"; payload: string }
+	| { type: "remove-task"; payload: string };
 export type {Action};
 
 
@@ -34,6 +36,7 @@ type Project = {
 	title: string;
 	desc: string;
 	date: string;
+	tasks: string[];
 };
 export type { Project };
 	

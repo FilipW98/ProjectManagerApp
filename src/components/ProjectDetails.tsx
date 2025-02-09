@@ -5,7 +5,7 @@ import { useContext } from 'react';
 export default function ProjectDetails() {
 
 	const projectDeatilsCtx = useContext(ProjectContext); 
-	const [taskData, setTaskData] = useState<{tasks:string[], input:string}>({ tasks:[], input:''});
+	const [taskData, setTaskData] = useState<{ tasks: string[], input: string }>({ tasks: [], input: '' });
 
 	function deleteProjectHandler() {
 		const updatedProjects = projectDeatilsCtx?.state.saveProject.filter(
@@ -14,21 +14,15 @@ export default function ProjectDetails() {
          projectDeatilsCtx?.dispatchFn({ type: 'update-save-project', payload: updatedProjects ?? [] });
 		 projectDeatilsCtx?.dispatchFn({type: "delete-project"});
 	}
-
-	function deleteTaskHandler(selectedTask:string) {
-		setTaskData(prev => ({
-			...prev,
-			tasks: prev.tasks.filter(task => task !== selectedTask),
-		}));
-	}
 	
 	function addTaskHandler() {
-		if (taskData.input.trim() !== '' && !taskData.tasks.includes(taskData.input.trim())) {
-			setTaskData(prev => ({
-				tasks: [...prev.tasks, prev.input],
-				input: '',
-			}));
+		if (projectDeatilsCtx?.state.selectedProject && taskData.input.trim()) {
+			  projectDeatilsCtx.dispatchFn({ type: 'add-task', payload: taskData.input });
 		}
+		setTaskData(prev => ({
+			tasks: [...prev.tasks, prev.input],
+			input: '',
+		}));
 	}
 
 	return (
@@ -66,20 +60,18 @@ export default function ProjectDetails() {
 					Add task
 				</button>
 			</div>
-			{taskData.tasks.length === 0 && (
+			{projectDeatilsCtx?.state.selectedProject?.tasks.length === 0 && (
 				<p className='text-stone-800 my-4 sm:text-base text-sm'>This project does not have any tasks yet.</p>
 			)}
-			{taskData.tasks.length > 0 && (
-				<ul className='p-4 mt-8 rounded-md bg-stone-100'>
-					{taskData.tasks.map(task => {
+			{(projectDeatilsCtx?.state.selectedProject?.tasks ?? []).length > 0 && (
+				<ul className='p-2 mt-8  '>
+					{projectDeatilsCtx?.state.selectedProject?.tasks.map(task => {
 						return (
-							<li key={task} className='flex justify-between my-4'>
+							<li key={task} className='flex justify-between my-4 p-3 bg-stone-200 rounded-md'>
 								<span>{task}</span>
 								<button
 									className='text-stone-700 hover:text-red-500 transition duration-300'
-									onClick={() => {
-										deleteTaskHandler(task);
-									}}
+									onClick={() => projectDeatilsCtx.dispatchFn({ type: 'remove-task', payload: task })}
 								>
 									Clear
 								</button>

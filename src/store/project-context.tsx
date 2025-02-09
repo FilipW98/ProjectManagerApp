@@ -40,6 +40,40 @@ const projectReducer = (prevState: ProjectState, action: Action): ProjectState =
 			saveProject: action.payload
 		}
 	}
+
+	if (action.type === 'add-task') {
+
+		const updatedProjects = prevState.saveProject.map(project =>
+			project.title === prevState.selectedProject?.title
+				? {
+					...project,
+					tasks: [...(project.tasks || []), action.payload]
+				}
+				: project
+		);
+		return {
+			...prevState,
+			saveProject: updatedProjects,
+			selectedProject: updatedProjects.find(p => p.title === prevState.selectedProject?.title) || null
+		};
+	}
+
+	if (action.type === 'remove-task') {
+		const updatedProjects = prevState.saveProject.map(project =>
+			project.title === prevState.selectedProject?.title
+				? {
+						...project,
+					tasks: project.tasks.filter(task => task !== action.payload),
+				}
+				: project
+		);
+		return {
+			...prevState,
+			saveProject: updatedProjects,
+			selectedProject: updatedProjects.find(p => p.title === prevState.selectedProject?.title) || null,
+		};
+	}
+
 	return prevState;
 };
 
@@ -54,8 +88,8 @@ export default function ProjectContextProvider({ children }: ProjectContextProvi
 	function newProjectHandler(){
 		dispatchFn({ type: "new-project" });
 	}
-	function saveProjectHandler(title: string, desc: string, date: string) {
-		dispatchFn({ type: 'save-project', payload: { title, desc, date }});
+	function saveProjectHandler(title: string, desc: string, date: string,tasks:string[]) {
+		dispatchFn({ type: 'save-project', payload: { title, desc, date,tasks }});
 	}
 
 	const ctx = {
